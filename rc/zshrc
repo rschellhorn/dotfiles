@@ -3,6 +3,8 @@ source ~/.dotfiles/config/tab_title.zsh
 source ~/.dotfiles/config/git_autocomplete.zsh
 source ~/.dotfiles/config/global.sh
 
+source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+
 # Define the directories you store your projects in in
 #   ~/.dotfiles/script/personal.zsh
 #

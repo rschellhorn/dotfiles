@@ -9,14 +9,6 @@ export magenta="\[\033[0;35m\]"
 export cyan="\[\033[0;36m\]"
 export white="\[\033[0;37m\]"
 
-# RVM
-if [[ -s $HOME/.rvm/scripts/rvm ]]; then
-  source $HOME/.rvm/scripts/rvm
-  __rvm_prompt="$gray\$(~/.rvm/bin/rvm-prompt) "
-else
-  __rvm_prompt=""
-fi
-
 # rbenv support
 if which rbenv > /dev/null; then
   eval "$(rbenv init - bash)";

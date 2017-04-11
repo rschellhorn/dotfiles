@@ -1,3 +1,4 @@
+
 " This vimrc automatically installs everything it needs.
 " To install, or reinstall, remove ~/.vim directory and open Vim.
 
@@ -5,80 +6,81 @@ set nocompatible
 filetype off
 
 let needsToInstallBundles=0
-if !isdirectory(expand("~/.vim/bundle/vundle"))
+if !isdirectory(expand("~/.vim/bundle/Vundle.vim"))
   echo "\nInstalling Vim dependencies... Please be patient!\n"
   silent !mkdir -p ~/.vim/tmp
   silent !mkdir -p ~/.vim/swap
   silent !mkdir -p ~/.vim/undo
   silent !mkdir -p ~/.vim/bundle
   silent !mkfifo ~/.vim/commands-fifo
-  silent !git clone https://github.com/gmarik/vundle ~/.vim/bundle/vundle
+  silent !git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
   let needsToInstallBundles=1
 endif
 
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
 
 " Do these first, because other plugins depend on them
-Bundle 'gmarik/vundle'
-Bundle 'Syntastic'
-Bundle 'tpope/vim-fugitive'
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'Syntastic'
+Plugin 'tpope/vim-fugitive'
 
 " Colorschemes
-Bundle 'wgibbs/vim-irblack'
-Bundle 'vim-scripts/tir_black'
+Plugin 'wgibbs/vim-irblack'
+Plugin 'vim-scripts/tir_black'
 
 " Syntax & Language Support
-Bundle 'hail2u/vim-css3-syntax'
-Bundle 'kchmck/vim-coffee-script'
-Bundle 'nono/vim-handlebars'
-Bundle 'othree/html5-syntax.vim'
-Bundle 'slim-template/vim-slim'
-Bundle 'tpope/vim-markdown'
-Bundle 'tpope/vim-cucumber'
-Bundle 'vim-ruby/vim-ruby'
-Bundle 'vim-scripts/VimClojure'
-Bundle 'Keithbsmiley/rspec.vim'
+Plugin 'hail2u/vim-css3-syntax'
+Plugin 'kchmck/vim-coffee-script'
+Plugin 'othree/html5-syntax.vim'
+Plugin 'slim-template/vim-slim'
+Plugin 'plasticboy/vim-markdown'
+Plugin 'tpope/vim-cucumber'
+Plugin 'tpope/vim-haml'
+Plugin 'vim-ruby/vim-ruby'
+Plugin 'vim-scripts/VimClojure'
+Plugin 'Keithbsmiley/rspec.vim'
+Plugin 'elixir-lang/vim-elixir'
+Plugin 'mtscout6/vim-cjsx'
+
+Plugin 'pangloss/vim-javascript'
+Plugin 'mxw/vim-jsx'
+Plugin 'elzr/vim-json'
 
 " Other
-Bundle 'csexton/trailertrash.vim'
-Bundle 'edsono/vim-matchit'
-Bundle 'godlygeek/tabular'
-Bundle 'kana/vim-textobj-user'
-Bundle 'kien/ctrlp.vim'
-Bundle 'mileszs/ack.vim'
-Bundle 'nelstrom/vim-textobj-rubyblock'
-Bundle 'nelstrom/vim-visual-star-search'
-Bundle 'nelstrom/vim-americanize'
-Bundle 'tomtom/tcomment_vim'
-Bundle 'tpope/vim-abolish'
-Bundle 'tpope/vim-bundler'
-Bundle 'tpope/vim-rails'
-Bundle 'tpope/vim-sensible'
-Bundle 'tpope/vim-surround'
-Bundle 'tpope/vim-unimpaired'
-Bundle 'tpope/vim-vinegar'
-Bundle 'vim-scripts/bufexplorer.zip'
-" Bundle 'eiginn/netrw'
-Bundle 'michaeljsmith/vim-indent-object'
-Bundle 'gavinbeatty/dragvisuals.vim'
-Bundle 'guns/vim-clojure-static'
-Bundle 'luochen1990/rainbow'
-Bundle 'iain/vim-rspec'
+" Plugin 'nelstrom/vim-markdown-folding'
+Plugin 'csexton/trailertrash.vim'
+" Plugin 'edsono/vim-matchit'
+Plugin 'geoffharcourt/vim-matchit'
+Plugin 'godlygeek/tabular'
+Plugin 'kien/ctrlp.vim'
+Plugin 'mileszs/ack.vim'
+Plugin 'tomtom/tcomment_vim'
+Plugin 'tpope/vim-abolish'
+Plugin 'tpope/vim-rails'
+Plugin 'tpope/vim-sensible'
+Plugin 'tpope/vim-unimpaired'
+Plugin 'tpope/vim-vinegar'
+Plugin 'michaeljsmith/vim-indent-object'
+" Plugin 'guns/vim-clojure-static'
+Plugin 'luochen1990/rainbow'
+Plugin 'iain/vim-rspec'
+Plugin 'jlanzarotta/bufexplorer'
+Plugin 'flowtype/vim-flow'
 
-Bundle 'rizzatti/funcoo.vim'
-Bundle 'rizzatti/dash.vim'
+" Always last
+Plugin 'Lokaltog/vim-powerline'
 
-Bundle 'Lokaltog/vim-powerline'
+call vundle#end()
+filetype plugin indent on
 
 if needsToInstallBundles == 1
-  echo "\nInstalling Bundles, please ignore key map error messages\n"
-  :BundleInstall!
+  echo "\nInstalling plugins.\n"
+  :PluginInstall
   echo "\nInstalled.\n"
 endif
 
 filetype plugin indent on
-
 
 
 
@@ -101,8 +103,8 @@ end
 
 set vb t_vb=               " Turn off beep
 set lazyredraw             " Don't redraw during macro execution
-set synmaxcol=2048         " Stop syntax highlighting for long lines
-set relativenumber         " Relative line numbering
+set synmaxcol=512          " Stop syntax highlighting for long lines
+" set relativenumber         " Relative line numbering
 set number                 " Relative line numbering
 set nowrap                 " No wrapping by default
 set scrolloff=4            " Keep a few lines above and below current line
@@ -118,6 +120,7 @@ set undodir=~/.vim/undo    " Where to store undo history
 set timeoutlen=500         " Don't wait so long for ambiguous leader keys
 set noesckeys              " Get rid of the delay when hitting esc!
 set gdefault               " assume the /g flag on :s substitutions to replace all matches in a line
+set nocompatible
 
 " Indenting always 2 spaces, sorry Python
 set cindent
@@ -127,34 +130,30 @@ set smartindent
 set softtabstop=2
 set tabstop=2
 
+" Hide DS_store, .git and current and previous directory indicators
+" Use - to go up one dir
+" let g:netrw_list_hide = "\.DS_Store,\.git/,^\\\./,^\\\.\\\./"
+" let g:netrw_banner    = 0
+" let g:netrw_liststyle = 1
+" let g:netrw_nobeval   = 1
+set wildignore+=.DS_Store
+
 " Search
 set smartcase
 set hlsearch
 
+" Markdown
+let g:vim_markdown_folding_disabled = 1
+
+" Ruby
 let ruby_no_expensive = 1 " Differentiate between do..end and class..end is slow
 let ruby_operators = 1    " Highlight Ruby operators
-
-" Hide DS_store, .git and current and previous directory indicators
-" Use - to go up one dir
-" let g:netrw_list_hide= "\.DS_Store,\.git/,^\\\./,^\\\.\\\./"
-" let g:netrw_banner     = 0
-" let g:netrw_localrmdir='rm -r'
-let g:netrw_nobeval = 1
-" let g:netrw_liststyle=1
-
-if has("balloon_eval")
-  set noballooneval
-endif
 
 let g:ackprg = 'ag --nogroup --nocolor --column'
 
 let g:Powerline_symbols = 'fancy' " Use fancy symbols in vim-powerline
 
 set formatprg=par\ -w80\ -q
-
-if exists(':Americanize')
-  :Americanize
-endif
 
 
 " ==========================
@@ -170,10 +169,8 @@ autocmd BufReadPost *
 " Format xml files
 au FileType xml exe ":silent 1,$!xmllint --format --recover - 2>/dev/null"
 
-
 " Add rainbows and unicorns
 let g:rainbow_active = 1
-
 
 " ==========================
 " GENERAL KEY MAPPINGS
@@ -190,7 +187,7 @@ vmap <F2> :w !pbcopy<cr><cr>
 
 " in insert mode, jj goes to normal mode
 " if you ever need to type jj for real, type it slowly, like on old school mobile phones
-inoremap jj <ESC>
+" inoremap jj <ESC>
 
 " Directly switch between open splitted windows
 map <C-J> <C-W>j
@@ -230,14 +227,6 @@ inoremap <s-tab> <c-n>
 " ":Errors".
 cnoreabbrev E e
 
-" Dragvisuals configuration
-vmap <expr> <LEFT> DVB_Drag('left')
-vmap <expr> <RIGHT> DVB_Drag('right')
-vmap <expr> <DOWN> DVB_Drag('down')
-vmap <expr> <UP> DVB_Drag('up')
-
-vmap <expr> D DVB_Duplicate()
-
 
 " Insert hex keys
 inoremap <silent> <F12> <ESC>:r ! ruby -r securerandom -e "print SecureRandom.hex(32)"<CR>kJ
@@ -254,14 +243,13 @@ map <leader>v :view %%
 map <leader>m :vsplit %%
 map <leader>n :split %%
 
-let g:rspec_command_launcher = "iterm"
-let g:rspec_command_executable = "run_test {spec}"
 
-" Rspec.vim mappings
-map <Leader>t :call RunCurrentSpecFile()<cr>
-map <Leader>T :call RunNearestSpec()<cr>
-map <Leader>l :call RunLastSpec()<cr>
-map <Leader>r :call RunAllSpecs()<cr>
+" Rspec.vim
+let g:rspec_runner = "os_x_iterm"
+map <Leader>t :w<cr>:call RunCurrentSpecFile()<cr>
+map <Leader>T :w<cr>:call RunNearestSpec()<cr>
+map <Leader>l :w<cr>:call RunLastSpec()<cr>
+map <Leader>r :w<cr>:call RunAllSpecs()<cr>
 
 " Custom functions
 map <leader>p :call PromoteToLet()<cr>
@@ -284,6 +272,9 @@ nmap <Leader>ac :Tabularize /#<cr>
 nmap <Leader>a{ :Tabularize /{<cr>
 vmap <Leader>a{ :Tabularize /{<cr>gv
 vmap <Leader>a{ :Tabularize /{<cr>gv
+" Align from
+nmap <Leader>af :Tabularize /from<cr>
+vmap <Leader>af :Tabularize /from<cr>gv
 
 " Fugitive (Git)
 map <Leader><Leader>c :Gcommit<cr>
@@ -295,11 +286,8 @@ map <Leader><Leader>f :Git fetch<cr>
 map <Leader><Leader>u :Git up<cr>
 
 " Open notes file
-map <Leader>q :split ~/Dropbox/notes.md<cr>
+" map <Leader>q :split ~/Dropbox/notes.md<cr>
 
-
-
-nmap <silent> <leader>d <Plug>DashSearch
 
 
 " ==========================
@@ -409,3 +397,31 @@ endfunction
 nmap <Leader>a: :call DoAlignRubyHashes()<cr>
 " In visual mode, the range is already fixed
 vmap <Leader>a: :Tabularize/\(:.*\)\@<!:\zs/l1<cr>gv
+
+" Syntastic configuration
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:flow#autoclose = 1
+let g:javascript_plugin_flow = 1
+
+let g:syntastic_always_populate_loc_list = 0
+let g:syntastic_auto_loc_list = 0
+let g:syntastic_check_on_open = 0
+let g:syntastic_check_on_wq = 0
+let g:syntastic_ruby_mri_exec = '~/.rbenv/shims/ruby'
+let g:jsx_ext_required = 0 " Allow JSX in normal JS files
+let g:syntastic_javascript_checkers = ['eslint']
+let g:syntastic_javascript_eslint_exec = 'eslint_d'
+let g:syntastic_javascript_flow_exe = 'flow'
+
+let g:syntastic_error_symbol = '❌'
+let g:syntastic_style_error_symbol = '⁉️'
+let g:syntastic_warning_symbol = '⚠️'
+let g:syntastic_style_warning_symbol = '💩'
+
+highlight link SyntasticErrorSign SignColumn
+highlight link SyntasticWarningSign SignColumn
+highlight link SyntasticStyleErrorSign SignColumn
+highlight link SyntasticStyleWarningSign SignColumn

@@ -2,7 +2,7 @@ export LC_CTYPE=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 
 # Setting the editor of choice
-export EDITOR='mvim'
+export EDITOR='vim'
 export GIT_EDITOR='vim'
 export VISUAL=$EDITOR
 export SVN_EDITOR=$EDITOR
@@ -10,17 +10,12 @@ export BUNDLER_EDITOR=$EDITOR
 export GEMEDITOR=$EDITOR
 
 # Ruby Optimalizations
-# export RUBY_HEAP_MIN_SLOTS=1100000 (obsolete in Ruby 2.1)
 export RUBY_GC_HEAP_INIT_SLOTS=1100000
 export RUBY_GC_MALLOC_LIMIT=110000000
 export RUBY_HEAP_FREE_MIN=20000
 export RUBY_HEAP_SLOTS_GROWTH_FACTOR=1
 
 # Paths
-export PATH="/usr/local/bin:$PATH"
-if [[ -d "$HOME/.rvm/bin" ]]; then
-  export PATH=$PATH:$HOME/.rvm/bin
-fi
 if [[ -d "/usr/local/sbin" ]]; then
   export PATH=$PATH:/usr/local/sbin
 fi
@@ -38,8 +33,8 @@ alias lth='l -t|head'
 alias lh='ls -Shl | less'
 alias tf='tail -f -n 100'
 alias less='less -R' # color codes in less
-alias m='mvim --remote-silent' # open file in existing mvim
 alias grep='grep --colour=always'
+alias json='python -m json.tool'
 
 # Ruby aliases
 alias rdm='rake db:migrate db:test:prepare'
