@@ -19,24 +19,16 @@ Only use this if you know what you are doing.
 
 ### Prerequisites
 
-* Xcode (download from App store)
-* [iTerm2](http://www.iterm2.com/)
+* Command Line tools: xcode-select --install
 * [Homebrew](http://mxcl.github.io/homebrew/)
 
 ### Homebrew
 
-Here's what I install on a clean OSX:
-
-    brew install ack imagemagick par readline wget \
-      libyaml mysql zsh node sqlite memcached \
-      postgresql tree openssl
-
-Make sure to read the caveats of those packages to make them start up
-automatically when that makes sense.
-
-I use rbenv and ruby-build for installing Ruby:
-
-    brew install rbenv ruby-build
+```bash
+ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+brew cask install caffeine firefox google-chrome iterm2
+brew install ack chromedriver diff-so-fancy ngrep phantomjs rbenv ruby-build ssh-copy-id vim wget yarn zsh
+```
 
 ### dotfiles
 
