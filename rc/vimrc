@@ -22,7 +22,7 @@ call vundle#begin()
 
 " Do these first, because other plugins depend on them
 Plugin 'VundleVim/Vundle.vim'
-Plugin 'Syntastic'
+Plugin 'w0rp/ale'
 Plugin 'tpope/vim-fugitive'
 
 " Colorschemes
@@ -38,19 +38,14 @@ Plugin 'plasticboy/vim-markdown'
 Plugin 'tpope/vim-cucumber'
 Plugin 'tpope/vim-haml'
 Plugin 'vim-ruby/vim-ruby'
-Plugin 'vim-scripts/VimClojure'
 Plugin 'Keithbsmiley/rspec.vim'
 Plugin 'elixir-lang/vim-elixir'
-Plugin 'mtscout6/vim-cjsx'
-
 Plugin 'pangloss/vim-javascript'
 Plugin 'mxw/vim-jsx'
 Plugin 'elzr/vim-json'
 
 " Other
-" Plugin 'nelstrom/vim-markdown-folding'
 Plugin 'csexton/trailertrash.vim'
-" Plugin 'edsono/vim-matchit'
 Plugin 'geoffharcourt/vim-matchit'
 Plugin 'godlygeek/tabular'
 Plugin 'kien/ctrlp.vim'
@@ -62,7 +57,6 @@ Plugin 'tpope/vim-sensible'
 Plugin 'tpope/vim-unimpaired'
 Plugin 'tpope/vim-vinegar'
 Plugin 'michaeljsmith/vim-indent-object'
-" Plugin 'guns/vim-clojure-static'
 Plugin 'luochen1990/rainbow'
 Plugin 'iain/vim-rspec'
 Plugin 'jlanzarotta/bufexplorer'
@@ -397,31 +391,3 @@ endfunction
 nmap <Leader>a: :call DoAlignRubyHashes()<cr>
 " In visual mode, the range is already fixed
 vmap <Leader>a: :Tabularize/\(:.*\)\@<!:\zs/l1<cr>gv
-
-" Syntastic configuration
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-let g:flow#autoclose = 1
-let g:javascript_plugin_flow = 1
-
-let g:syntastic_always_populate_loc_list = 0
-let g:syntastic_auto_loc_list = 0
-let g:syntastic_check_on_open = 0
-let g:syntastic_check_on_wq = 0
-let g:syntastic_ruby_mri_exec = '~/.rbenv/shims/ruby'
-let g:jsx_ext_required = 0 " Allow JSX in normal JS files
-let g:syntastic_javascript_checkers = ['eslint']
-let g:syntastic_javascript_eslint_exec = 'eslint_d'
-let g:syntastic_javascript_flow_exe = 'flow'
-
-let g:syntastic_error_symbol = '❌'
-let g:syntastic_style_error_symbol = '⁉️'
-let g:syntastic_warning_symbol = '⚠️'
-let g:syntastic_style_warning_symbol = '💩'
-
-highlight link SyntasticErrorSign SignColumn
-highlight link SyntasticWarningSign SignColumn
-highlight link SyntasticStyleErrorSign SignColumn
-highlight link SyntasticStyleWarningSign SignColumn
