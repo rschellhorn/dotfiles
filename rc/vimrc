@@ -136,6 +136,9 @@ set wildignore+=.DS_Store
 set smartcase
 set hlsearch
 
+" Javascript
+let g:jsx_ext_required = 0 " Allow JSX in normal JS files
+
 " Markdown
 let g:vim_markdown_folding_disabled = 1
 
@@ -143,12 +146,11 @@ let g:vim_markdown_folding_disabled = 1
 let ruby_no_expensive = 1 " Differentiate between do..end and class..end is slow
 let ruby_operators = 1    " Highlight Ruby operators
 
+" Others
 let g:ackprg = 'ag --nogroup --nocolor --column'
-
 let g:Powerline_symbols = 'fancy' " Use fancy symbols in vim-powerline
 
 set formatprg=par\ -w80\ -q
-
 
 " ==========================
 " AUTOCOMMANDS
