@@ -43,6 +43,7 @@ Plugin 'elixir-lang/vim-elixir'
 Plugin 'pangloss/vim-javascript'
 Plugin 'mxw/vim-jsx'
 Plugin 'elzr/vim-json'
+Plugin 'fleischie/vim-styled-components'
 
 " Other
 Plugin 'csexton/trailertrash.vim'
@@ -60,7 +61,6 @@ Plugin 'michaeljsmith/vim-indent-object'
 Plugin 'luochen1990/rainbow'
 Plugin 'iain/vim-rspec'
 Plugin 'jlanzarotta/bufexplorer'
-Plugin 'flowtype/vim-flow'
 
 " Always last
 Plugin 'Lokaltog/vim-powerline'

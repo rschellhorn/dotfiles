@@ -3,7 +3,7 @@ export LC_ALL=en_US.UTF-8
 
 # Setting the editor of choice
 export EDITOR='vim'
-export GIT_EDITOR='vim'
+export GIT_EDITOR=$EDITOR
 export VISUAL=$EDITOR
 export SVN_EDITOR=$EDITOR
 export BUNDLER_EDITOR=$EDITOR
