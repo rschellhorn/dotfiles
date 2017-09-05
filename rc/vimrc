@@ -137,7 +137,7 @@ set tabstop=2
 set wildignore+=.DS_Store
 
 " Airline
-let g:airline_theme='dark_minimal'
+let g:airline_theme = "dark_minimal"
 let g:airline_powerline_fonts = 1
 let g:airline_skip_empty_sections = 1
 
@@ -264,8 +264,8 @@ vmap <Leader>a= :Tabularize /=<cr>gv
 nmap <Leader>a> :Tabularize /=><cr>
 vmap <Leader>a> :Tabularize /=><cr>gv
 " Align commas
-nmap <Leader>a, :Tabularize /,\zs/l1<cr>
-vmap <Leader>a, :Tabularize /,\zs/l1<cr>gv
+nmap <Leader>a, :Tabularize /,\zs/l0r1<cr>
+vmap <Leader>a, :Tabularize /,\zs/l0r1<cr>gv
 " Align words and fix indentation
 nmap <Leader>aw :Tabularize /\s\+\zs/l1<cr>=ip
 vmap <Leader>aw :Tabularize /\s\+\zs/l1<cr>gv=gv
