@@ -74,7 +74,7 @@ alias f='git fetch'
 alias fetch='git fetch'
 alias gf='git fetch && git status'
 alias push='git push'
-
+alias ap='git add -N . && git add -p'
 
 function r() {
   if [ -f "./script/rails" ]; then
