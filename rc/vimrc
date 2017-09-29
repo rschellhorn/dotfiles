@@ -390,7 +390,7 @@ function! DoAlignRubyHashes()
   endwhile
 
   " Call Tabularize with the new range
-  exe from.','.to.'Tabularize/\(:.*\)\@<!\(:\s\)\zs/l1'
+  exe from.','.to.'Tabularize/\(:.*\)\@<!\(:\s\)\zs/l0r1'
   normal! 0
 
 endfunction

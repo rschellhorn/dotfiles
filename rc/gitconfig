@@ -87,7 +87,5 @@
 	keepBackup = false
 [difftool]
 	prompt = false
-[pager]
-  diff = diff-so-fancy | less --tabs=1,5 -RFX
 [rerere]
 	enabled = 1
