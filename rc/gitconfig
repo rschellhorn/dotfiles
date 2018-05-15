@@ -20,7 +20,7 @@
   newauthor = commit --amend --reset-author -C HEAD
   poes = push
   l = "!source ~/.dotfiles/script/githelpers && pretty_git_log"
-  la = !git l --all
+  la = !git l --all --simplify-by-decoration
   hp = "!source ~/.dotfiles/script/githelpers && show_git_head"
   wtf = "!git commit -m \"$(curl -s whatthecommit.com/index.txt)\""
   scoreboard = "!git log | grep '^Author' | sort | uniq -ci | sort -r"
@@ -72,9 +72,10 @@
 [credential]
   helper = osxkeychain
 [filter "lfs"]
-	clean = git-lfs clean %f
-	smudge = git-lfs smudge %f
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
 	required = true
+	process = git-lfs filter-process
 [user]
 	name = Rob Schellhorn
 	email = rob.schellhorn@gmail.com
@@ -89,3 +90,5 @@
 	prompt = false
 [rerere]
 	enabled = 1
+[diff-so-fancy]
+	stripLeadingSymbols = true

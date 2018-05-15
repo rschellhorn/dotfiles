@@ -35,18 +35,15 @@ alias tf='tail -f -n 100'
 alias less='less -R' # color codes in less
 alias grep='grep --colour=always'
 alias json='python -m json.tool'
+alias vim='mvim -v'
 
 # Ruby aliases
 alias rdm='rake db:migrate db:test:prepare'
 alias rr='mkdir -p tmp && touch tmp/restart.txt'
-alias cu='bundle exec cucumber -r features'
-alias wip='cu --profile wip'
-alias specdoc='time rspec -fd'
-alias s='rspec --require ~/.dotfiles/script/rspec_focus --order default --color --tty'
+alias specdoc='time bin/rspec -fd'
+alias s='FAST=true DISABLE_SPRING=1 bin/rspec'
 alias be='bundle exec'
-alias irb='pry'
-alias guard='bundle exec guard'
-alias fs='foreman start'
+alias sc='s `d --name-only`'
 
 # Git aliases
 alias c='git commit'
@@ -75,6 +72,9 @@ alias fetch='git fetch'
 alias gf='git fetch && git status'
 alias push='git push'
 alias ap='git add -N . && git add -p'
+
+# AWS
+alias aws_instances="aws ec2 describe-instances --query 'Reservations[].Instances[].[State.Name,PrivateIpAddress,Tags[].Value[]]'"
 
 function r() {
   if [ -f "./script/rails" ]; then

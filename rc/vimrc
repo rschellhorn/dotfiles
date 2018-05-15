@@ -2,102 +2,97 @@
 " This vimrc automatically installs everything it needs.
 " To install, or reinstall, remove ~/.vim directory and open Vim.
 
-set nocompatible
+if &compatible
+endif
+
 filetype off
 
-let needsToInstallBundles=0
-if !isdirectory(expand("~/.vim/bundle/Vundle.vim"))
+let needsToInstallPlugins=0
+if !filereadable(expand("~/.vim/autoload/plug.vim"))
   echo "\nInstalling Vim dependencies... Please be patient!\n"
   silent !mkdir -p ~/.vim/tmp
   silent !mkdir -p ~/.vim/swap
   silent !mkdir -p ~/.vim/undo
-  silent !mkdir -p ~/.vim/bundle
   silent !mkfifo ~/.vim/commands-fifo
-  silent !git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-  let needsToInstallBundles=1
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  let needsToInstallPlugins=1
 endif
 
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+call plug#begin('~/.vim/plugged')
 
-" Do these first, because other plugins depend on them
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'w0rp/ale'
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-dispatch'
+Plug 'w0rp/ale'                           " Async Linter Engine
+Plug 'adelarsq/vim-matchit'               " % jumps between do/end etc
+Plug 'csexton/trailertrash.vim'           " hate trailing whitespace
+Plug 'itchyny/lightline.vim'              " fancy statusbar
+Plug 'godlygeek/tabular'                  " vertically align stuff
+Plug 'janko-m/vim-test'                   " quickly run tests in terminal
+Plug 'justinmk/vim-dirvish'               " netrw replacer
+Plug 'jlanzarotta/bufexplorer'            " lists open bufffers like netrw
+Plug 'kien/ctrlp.vim'                     " fuzzy search files
+Plug 'luochen1990/rainbow'                " rainbow parenthesis
+Plug 'michaeljsmith/vim-indent-object'    " defines textobjects based on indent-level
+Plug 'mileszs/ack.vim'                    " search contents of files with ack or ag
+Plug 'sheerun/vim-polyglot'               " contains a ton of syntax plugins
+Plug 'tomtom/tcomment_vim'                " quickly comment/uncomment code
 
-" Colorschemes
-Plugin 'wgibbs/vim-irblack'
-Plugin 'vim-scripts/tir_black'
+Plug 'tpope/vim-eunuch'                   " unix commands like :Move
+Plug 'tpope/vim-fugitive'                 " git integration
+Plug 'tpope/vim-rails'                    " rails integration
+Plug 'tpope/vim-rhubarb'                  " open file in github.com
+Plug 'tpope/vim-sensible'                 " sensible defaults
+Plug 'tpope/vim-unimpaired'               " handy toggles
+Plug 'tpope/vim-repeat'                   " improved repeat button .
+Plug 'tpope/vim-surround'                 " quickly change quotes/parens
 
-" Syntax & Language Support
-Plugin 'hail2u/vim-css3-syntax'
-Plugin 'kchmck/vim-coffee-script'
-Plugin 'othree/html5-syntax.vim'
-Plugin 'slim-template/vim-slim'
-Plugin 'plasticboy/vim-markdown'
-Plugin 'tpope/vim-cucumber'
-Plugin 'tpope/vim-haml'
-Plugin 'vim-ruby/vim-ruby'
-" Plugin 'Keithbsmiley/rspec.vim'
-Plugin 'elixir-lang/vim-elixir'
-Plugin 'pangloss/vim-javascript'
-Plugin 'mxw/vim-jsx'
-Plugin 'elzr/vim-json'
-Plugin 'fleischie/vim-styled-components'
-Plugin 'janko-m/vim-test'
+Plug 'nanotech/jellybeans.vim' " colorscheme
+" Plug 'twerth/ir_black'       " old colorscheme
+" Plug 'fenetikm/falcon'
+" Plug 'dracula/vim', { 'as': 'dracula' }
 
-" Other
-Plugin 'skywind3000/asyncrun.vim'
-Plugin 'csexton/trailertrash.vim'
-Plugin 'geoffharcourt/vim-matchit'
-Plugin 'godlygeek/tabular'
-Plugin 'kien/ctrlp.vim'
-Plugin 'mileszs/ack.vim'
-Plugin 'tomtom/tcomment_vim'
-Plugin 'tpope/vim-abolish'
-Plugin 'tpope/vim-rails'
-Plugin 'tpope/vim-sensible'
-Plugin 'tpope/vim-unimpaired'
-Plugin 'tpope/vim-vinegar'
-Plugin 'michaeljsmith/vim-indent-object'
-Plugin 'luochen1990/rainbow'
-" Plugin 'iain/vim-rspec'
-Plugin 'jlanzarotta/bufexplorer'
+call plug#end()
 
-" Always last
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-
-call vundle#end()
-filetype plugin indent on
-
-if needsToInstallBundles == 1
+if needsToInstallPlugins == 1
   echo "\nInstalling plugins.\n"
-  :PluginInstall
+  :PlugInstall
   echo "\nInstalled.\n"
 endif
 
-filetype plugin indent on
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:dirvish_mode = ':sort ,^.*[\/],'
+" autocmd FileType dirvish silent keeppatterns g@\v/\.[^\/]+/?$@d _
+autocmd FileType dirvish silent set nocursorline
 
+augroup my_dirvish_events
+  autocmd!
 
+  autocmd FileType dirvish map <buffer> % :edit <C-R>=expand('%:h').'/'<cr>
+  autocmd FileType dirvish map <buffer> d :!mkdir -p <C-R>=expand('%:h').'/'<cr>
+  autocmd FileType dirvish map <buffer> D :!rm -r <C-R>=expand('<cfile>')<cr>
+  autocmd FileType dirvish map <buffer> r :!mv <C-R>=expand('<cfile>')<cr> <C-R>=expand('<cfile>')<cr>
+
+  " autocmd FileType dirvish silent keeppatterns g@\v/\.[^\/]+/?$@d _
+
+augroup END
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " ==========================
 " SETTINGS
 " ==========================
 
+filetype plugin indent on
+
 if has("gui_macvim")
   set antialias                      " Pretty
   set guioptions=Ace                 " No menubar, toolbar or scrollbars, as minimal as possible
   set guifont=Dejavu\ Sans\ Mono:h16 " Get Dejavu Sans mono here: http://dejavu-fonts.org/
-  colorscheme ir_black               " Pastel colors
+  set clipboard=unnamed              " Copy-paste just works
   set fuoptions=maxvert,maxhorz      " Fixes Full Screen on OSX
   " If you are on OSX Lion, and you hate Lion's native full screen, turn it off for macvim:
   "   defaults write org.vim.MacVim MMNativeFullScreen 0
   " Press Ctrl+Cmd+F to go full screen
-else
-  colorscheme tir_black " Use Terminal version of ir_black
 end
+
 
 set vb t_vb=               " Turn off beep
 set lazyredraw             " Don't redraw during macro execution
@@ -128,25 +123,11 @@ set smartindent
 set softtabstop=2
 set tabstop=2
 
-" Hide DS_store, .git and current and previous directory indicators
-" Use - to go up one dir
-" let g:netrw_list_hide = "\.DS_Store,\.git/,^\\\./,^\\\.\\\./"
-" let g:netrw_banner    = 0
-" let g:netrw_liststyle = 1
-" let g:netrw_nobeval   = 1
 set wildignore+=.DS_Store
-
-" Airline
-let g:airline_theme = "dark_minimal"
-let g:airline_powerline_fonts = 1
-let g:airline_skip_empty_sections = 1
 
 " Search
 set smartcase
 set hlsearch
-
-" Javascript
-let g:jsx_ext_required = 0 " Allow JSX in normal JS files
 
 " Markdown
 let g:vim_markdown_folding_disabled = 1
@@ -155,8 +136,26 @@ let g:vim_markdown_folding_disabled = 1
 let ruby_no_expensive = 1 " Differentiate between do..end and class..end is slow
 let ruby_operators = 1    " Highlight Ruby operators
 
+" Vim-test
+let test#strategy = 'vimterminal'
+let test#ruby#rspec#executable = 'FAST=1 DISABLE_SPRING=1 bin/rspec'
+let test#ruby#rspec#options = {
+      \ 'nearest': '--backtrace',
+      \ 'file':    '--format documentation'
+      \ }
+
 " Others
 let g:ackprg = 'ag --nogroup --nocolor --column'
+let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
+
+let g:ale_set_highlights = 0
+let g:ale_sign_error   = ' •' " has U+2009 as space
+let g:ale_sign_warning = ' •'
+let g:ale_sign_column_always = 1
+hi link ALEErrorSign    Error
+hi link ALEWarningSign  Warning
+hi Error   cterm=bold gui=bold guibg=#151515 guifg=DarkRed
+hi Warning cterm=bold gui=bold
 
 set formatprg=par\ -w80\ -q
 
@@ -210,8 +209,8 @@ nnoremap <S-k> kJ
 nnoremap <cr> :nohlsearch<cr>
 
 " highlight the 100th character
-highlight ColorColumn ctermbg=magenta
-call matchadd('ColorColumn', '\%81v', 100)
+" highlight ColorColumn ctermbg=magenta
+" call matchadd('ColorColumn', '\%81v', 100)
 
 " In normal mode, space will start command mode.
 nnoremap <space> :
@@ -249,8 +248,8 @@ map <leader>n :split %%
 
 " Testing
 nmap <silent> <leader>t :TestNearest<CR>
-nmap <silent> <leader>T :TestFile<CR>
-nmap <silent> <leader>a :TestSuite<CR>
+nmap <silent> <leader>f :TestFile<CR>
+nmap <silent> <leader>s :TestSuite<CR>
 nmap <silent> <leader>l :TestLast<CR>
 nmap <silent> <leader>g :TestVisit<CR>
 
@@ -284,6 +283,7 @@ map <Leader><Leader>c :Gcommit<cr>
 map <Leader><Leader>b :Gblame<cr>
 map <Leader><Leader>s :Gstatus<cr>
 map <Leader><Leader>w :Gwrite<cr>
+map <Leader><Leader>l :Git l<cr>
 map <Leader><Leader>p :Git push<cr>
 map <Leader><Leader>f :Git fetch<cr>
 map <Leader><Leader>u :Git up<cr>
@@ -400,3 +400,88 @@ endfunction
 nmap <Leader>a: :call DoAlignRubyHashes()<cr>
 " In visual mode, the range is already fixed
 vmap <Leader>a: :Tabularize/\(:.*\)\@<!:\zs/l1<cr>gv
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Jellybean Colorscheme
+"
+let g:jellybeans_use_gui_italics = 0
+let g:jellybeans_overrides = { 'SignColumn': { 'guibg': '000000' } }
+let g:jellybeans_background_color = '000000'
+colorscheme jellybeans
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Status line configuration (using lightline)
+"
+set laststatus=2
+set noshowmode
+let g:lightline = {
+      \ 'colorscheme': 'jellybeans',
+      \ 'mode_map': { 'c': 'NORMAL' },
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ], [ 'filename' ] ],
+      \   'right': [ [ 'syntastic', 'lineinfo' ], ['percent'], [ 'fileformat', 'fileencoding', 'filetype' ] ]
+      \ },
+      \ 'component_function': {
+      \   'modified': 'LightlineModified',
+      \   'readonly': 'LightlineReadonly',
+      \   'fugitive': 'LightlineFugitive',
+      \   'filename': 'LightlineFilename',
+      \   'fileformat': 'LightlineFileformat',
+      \   'filetype': 'LightlineFiletype',
+      \   'fileencoding': 'LightlineFileencoding',
+      \   'mode': 'LightlineMode',
+      \ },
+      \ 'component_expand': {
+      \   'syntastic': 'ale#statusline#Count',
+      \ },
+      \ 'component_type': {
+      \   'syntastic': 'error',
+      \ },
+      \ 'separator': { 'left': '', 'right': '' },
+      \ 'subseparator': { 'left': '', 'right': '' }
+      \ }
+
+function! LightlineModified()
+  return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
+endfunction
+
+function! LightlineReadonly()
+  return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? '' : ''
+endfunction
+
+" \ '' != expand('%:t') ? expand('%:t') : '[No Name]') .
+function! LightlineFilename()
+  return ('' != LightlineReadonly() ? LightlineReadonly() . ' ' : '') .
+        \ (&ft == 'vimfiler' ? vimfiler#get_status_string() :
+        \  &ft == 'unite' ? unite#get_status_string() :
+        \  &ft == 'vimshell' ? vimshell#get_status_string() :
+        \ '' != expand('%:t') ? @% : '[No Name]') .
+        \ ('' != LightlineModified() ? ' ' . LightlineModified() : '')
+endfunction
+
+function! LightlineFugitive()
+  if &ft !~? 'vimfiler\|gundo' && exists("*fugitive#head")
+    let branch = fugitive#head()
+    return branch !=# '' ? ' '.branch : ''
+  endif
+  return ''
+endfunction
+
+function! LightlineFileformat()
+  return winwidth(0) > 70 ? &fileformat : ''
+endfunction
+
+function! LightlineFiletype()
+  return winwidth(0) > 70 ? (&filetype !=# '' ? &filetype : 'no ft') : ''
+endfunction
+
+function! LightlineFileencoding()
+  return winwidth(0) > 70 ? (&fenc !=# '' ? &fenc : &enc) : ''
+endfunction
+
+function! LightlineMode()
+  return winwidth(0) > 60 ? lightline#mode() : ''
+endfunction
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
